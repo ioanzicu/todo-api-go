@@ -11,6 +11,7 @@ import (
 func create() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		if r.Method == http.MethodPost {
+			// curl -H 'Content-Type: application/json' --request POST -d '{"name":"Kratos", "todo":"Kill the Zeus"}' localhost:3000/create
 			data := views.PostRequest{}
 			json.NewDecoder(r.Body).Decode(&data)
 			fmt.Println(data)
@@ -29,6 +30,7 @@ func create() http.HandlerFunc {
 			w.WriteHeader(http.StatusOK)
 			json.NewEncoder(w).Encode(data)
 		} else if r.Method == http.MethodDelete {
+			// curl -X DELETE localhost:3000/Arto
 			var name string = r.URL.Path[1:]
 			if err := model.DeleteTodo(name); err != nil {
 				w.Write([]byte("Some error - Delete"))
